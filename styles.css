@@ -87,20 +87,24 @@ section {
     text-decoration: none;
 }
 .nav-menu {
-    display: none;  
+    display: none;
     background: #333;
     color: white;
-    position: absolute; 
-    top: 60px;  
-    right: 20px;  
+    position: absolute;
+    top: 70px;
+    right: 20px;
     border-radius: 8px;
     padding: 10px;
-    z-index: 1000;  
-    transition: opacity 0.3s ease;  
-    opacity: 0;  
+    z-index: 1000;
+    transition: opacity 0.3s ease;
+    opacity: 0;
 }
 
 .nav-menu.active {
-    display: block; 
-    opacity: 1; 
+    display: block;
+    opacity: 1;
+}
+.nav-menu {
+    max-height: 300px;  /* 最大高さを設定 */
+    overflow: auto;     /* 内容が多い場合はスクロール */
 }
