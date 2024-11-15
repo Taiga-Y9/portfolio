@@ -1,0 +1,105 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #333;
+    color: #fff;
+    padding: 10px;
+    position: relative;
+}
+
+h1{
+    color: #ffffff;
+}
+h2{color:#333}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+.skills, .projects {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.skills div, .projects div {
+    flex: 1;
+    margin: 5px;
+    padding: 10px;
+    background: #e1e1e1;
+    border-radius: 4px;
+}
+
+/* ハンバーガーメニューのスタイル */
+.menu-icon {
+    cursor: pointer;  /* カーソルがポインタに変わる */
+    font-size: 30px;  /* アイコンのサイズを大きくする */
+    padding: 5px;
+    margin-left: auto; /* メニューアイコンを右側に配置 */
+    z-index: 1001
+}
+
+.nav-menu {
+    display: none;  /* 初期状態で非表示 */
+    background: #333;
+    color: white;
+    position: absolute; 
+    top: 60px;  /* ヘッダーの下に表示 */
+    right: 20px;  /* 右側に配置 */
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 1000;  /* メニューを前面に出す */
+}
+
+.nav-menu.active {
+    display: block;  /* activeクラスが付いたときに表示 */
+}
+
+.nav-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-menu li {
+    margin: 10px 0;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+}
+.nav-menu {
+    display: none;  
+    background: #333;
+    color: white;
+    position: absolute; 
+    top: 60px;  
+    right: 20px;  
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 1000;  
+    transition: opacity 0.3s ease;  
+    opacity: 0;  
+}
+
+.nav-menu.active {
+    display: block; 
+    opacity: 1; 
+}
