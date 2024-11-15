@@ -61,7 +61,8 @@ section {
     background: #333;
     color: white;
     position: absolute; 
-    top: 60px;  /* ヘッダーの下に表示 */
+    top: auto;     /* 現在の上位置を無効にする */
+    bottom: 20px;  /* 下端から20ピクセル内側に配置 */
     right: 20px;  /* 右側に配置 */
     border-radius: 8px;
     padding: 10px;
