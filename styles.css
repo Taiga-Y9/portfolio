@@ -37,8 +37,13 @@ section {
 .skills, .projects {
     display: flex;
     flex-wrap: wrap;
+    gap: 20px; /* アイテムの間隔 */
 }
-
+.skill-image {
+    width: 100px; /* 画像の幅 */
+    height: auto; /* 高さは自動調整 */
+    border-radius: 8px; /* 角を少し丸める */
+}
 .skills div, .projects div {
     flex: 1;
     margin: 5px;
