@@ -45,7 +45,7 @@ section {
     border-radius: 8px; /* 角を少し丸める */
 }
 .pr-image {
-    width: 250px; /* 画像の幅 */
+    width: 300px; /* 画像の幅 */
     height: auto; /* 高さは自動調整 */
     border-radius: 8px; /* 角を少し丸める */
 }
