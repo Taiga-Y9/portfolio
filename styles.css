@@ -49,6 +49,11 @@ section {
     height: auto; /* 高さは自動調整 */
     border-radius: 8px; /* 角を少し丸める */
 }
+.g-image {
+    width: 250px;
+    height: auto;
+    border=radius: 8px;
+}
 .skills div, .projects div {
     flex: 1;
     margin: 5px;
