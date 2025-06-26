@@ -4,91 +4,739 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ポートフォリオ | Yamazoe Taiga</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #0f172a;
+            --secondary-dark: #1e293b;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --text-light: #f8fafc;
+            --text-muted: #cbd5e1;
+            --border-color: #334155;
+            --card-bg: #1e293b;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Background Pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(167, 139, 250, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            backdrop-filter: blur(20px);
+            background: rgba(15, 23, 42, 0.9);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-desktop {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-desktop a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-desktop a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-desktop a:hover {
+            color: var(--text-light);
+        }
+
+        .nav-desktop a:hover::after {
+            width: 100%;
+        }
+
+        .menu-icon {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .menu-icon span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-light);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .nav-mobile {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-mobile.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-mobile ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .nav-mobile a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-mobile a:hover {
+            color: var(--text-light);
+        }
+
+        main {
+            margin-top: 80px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 2rem;
+        }
+
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        section {
+            margin: 4rem 0;
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-accent);
+            border-radius: 2px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .skill-image {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            border-radius: 12px;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card:hover .skill-image {
+            transform: scale(1.1);
+        }
+
+        .skill-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .projects-grid {
+            display: grid;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .project-card:hover::before {
+            opacity: 0.03;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-content {
+            padding: 2.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-title a {
+            color: inherit;
+            text-decoration: none;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: all 0.3s ease;
+        }
+
+        .project-title a:hover {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .project-description {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .project-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .project-image, .pr-image, .g-image {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .project-image:hover, .pr-image:hover, .g-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* Special styling for single project images */
+        .single-image {
+            max-width: 400px;
+            height: 200px;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: var(--accent-cyan);
+            transform: translateX(5px);
+        }
+
+        .footer {
+            margin-top: 4rem;
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-desktop {
+                display: none;
+            }
+
+            .menu-icon {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+
+            .project-content {
+                padding: 1.5rem;
+            }
+
+            .project-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .project-images {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Yamazoe Taiga</h1>
-        <p>Portfolio</p>
-        <div class="menu-icon" id="menu-icon"> &#9776; <!-- ハンバーガーアイコン -->
+        <div class="header-content">
+            <div class="logo">Yamazoe Taiga</div>
+            <nav class="nav-desktop">
+                <a href="#profile">プロフィール</a>
+                <a href="#skills">スキル</a>
+                <a href="#projects">プロジェクト</a>
+            </nav>
+            <div class="menu-icon" id="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav class="nav-mobile" id="nav-mobile">
+                <ul>
+                    <li><a href="#profile">プロフィール</a></li>
+                    <li><a href="#skills">スキル</a></li>
+                    <li><a href="#projects">プロジェクト</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
-<nav id="nav-menu" class="nav-menu">
-    <ul>
-        <li><a href="#profile">プロフィール</a></li>
-        <li><a href="#skills">スキル</a></li>
-        <li><a href="#projects">プロジェクト</a></li>
-    </ul>
-</nav>
 
-<div class="container">
+    <main>
+        <section class="hero fade-in">
+            <h1>Yamazoe Taiga</h1>
+        </section>
 
-    <section id="profile">
-        <h2>プロフィール</h2>
-        <p>山添大我 大阪公立大学工業高等専門学校 知能情報コース所属</p>
-    </section>
-    
-    <section id="skills">
-        <h2>スキル</h2>
-        <div class="skills">
-            <div>
-                <img src="images/skill1.png" class="skill-image">
-                <div>Python</div>
+        <section id="profile" class="fade-in">
+            <h2 class="section-title">プロフィール</h2>
+            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <p style="font-size: 1.1rem; color: var(--text-muted); line-height: 1.8;">
+                    山添大我 大阪公立大学工業高等専門学校 知能情報コース所属
+                </p>
             </div>
-            <div>
-                <img src="images/skill2.png" class="skill-image">
-                <div>HTML</div>
-            </div>
-            <div>
-                <img src="images/skill3.png" class="skill-image">
-                <div>CSS</div>
-            </div>
-            <div>
-                <img src="images/skill4.png" class="skill-image">
-                <div>Scratch</div>
-        </div>
-    </section>
-    
-    <section id="projects">
-        <h2>プロジェクト</h2>
-        <div class="projects">
-            <div>
-                <h3><a href="https://colab.research.google.com/drive/1DHqO3_DSctOLx0ZxvAaXsCowoqGRJxYR?usp=sharing">YRPG</a></h3>
-                <img src="images/pr2.png" class="pr-image">
-                <p>GoogleColabratoryにて作成した簡単なRPG。魔王を倒すために職業を選択し、様々なモンスターと闘いながら成長していく。</p>
-            </div>
-            <div>
-                <h3>HIT&BLOW</h3>
-                <img src="images/pr1.png" class="pr-image">
-                <p>高専祭にてチームで作成したゲーム。ヒントをもとに紙コップの位置と向きを当てるもの。いかに少ないヒントで正解にたどり着くかを競う。</p>
-            </div>
-            <div>
-                <h3>Flower picking game</h3>
-                <img src="images/g1.png" class="g-image">
-                <img src="images/g2.png" class="g-image">
-                <img src="images/g3.png" class="g-image">
-                <img src="images/g4.png" class="g-image">
-                <h4>制作時期　2024/12～1</h4>
-                <p>このゲーム「花摘みゲーム」は、プレイヤーがキャラクターを操作して、出現する花を摘むことを目的としたアクションゲーム。ゲームはpygameライブラリを使用して制作されている。
+        </section>
 
-                    プレイヤーは、ゲーム画面上で自キャラを操り、ランダムに出現する花を取ることで得点を稼ぐことができる。花は一定の間隔で生成され、10秒の時間が過ぎると枯れてしまう。
-                    自キャラはWASDキーで移動し、ゲーム内でFキーやGキーを押すことで移動速度を調整することもできる。プレイヤーが花に触れると、スコアが10ポイント加算されるが、花が枯れてしまうとゲームオーバーになるため、戦略的に行動することが求められる。また、ゲームオーバー後にはスコアが表示され、スペースキーを押すことでリスタートが可能。</p>
-                    <a target="_blank" href="https://github.com/Taiga-Y9/Flower-picking-game">Githubリポジトリ</a>
+        <section id="skills" class="fade-in">
+            <h2 class="section-title">スキル</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <img src="images/skill1.png" class="skill-image" alt="Python">
+                    <div class="skill-name">Python</div>
+                </div>
+                <div class="skill-card">
+                    <img src="images/skill2.png" class="skill-image" alt="HTML">
+                    <div class="skill-name">HTML</div>
+                </div>
+                <div class="skill-card">
+                    <img src="images/skill3.png" class="skill-image" alt="CSS">
+                    <div class="skill-name">CSS</div>
+                </div>
+                <div class="skill-card">
+                    <img src="images/skill5.png" class="skill-image" alt="C">
+                    <div class="skill-name">C</div>
+                </div>
+                <div class="skill-card">
+                    <img src="images/skill6.png" class="skill-image" alt="C++">
+                    <div class="skill-name">C++</div>
+                </div>
+                <div class="skill-card">
+                    <img src="images/skill4.png" class="skill-image" alt="Scratch">
+                    <div class="skill-name">Scratch</div>
+                </div>
             </div>
-            <div>
-                <h3>Calculator</h3>
-                <img src="images/c1.png" class="g-image">
-                <img src="images/c2.png" class="g-image">
-                <img src="images/c3.png" class="g-image">
-                <h4>制作時期　2024/2
-                    制作時間　約十時間
-                </h4>
-                <p>このプログラムは、PySide6を使用したシンプルな計算機アプリケーション。ユーザーはボタンをクリックして数字と演算子を入力し、基本的な四則演算（加算、減算、乗算、除算）が可能。項が3つ以上の計算、小数点以下を含んだ計算はできない。入力する桁数に縛りはない。ゼロでの除算の場合はエラーを表示する。可読性と保守性を考慮し、アプリはcalculator_app.pyに機能が、main.pyにエントリポイントが分割されている。</p>
-                    <a target="_blank" href="https://github.com/Taiga-Y9/calculator">Githubリポジトリ</a>
+        </section>
+
+        <section id="projects" class="fade-in">
+            <h2 class="section-title">プロジェクト</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">
+                                <a href="https://colab.research.google.com/drive/1DHqO3_DSctOLx0ZxvAaXsCowoqGRJxYR?usp=sharing">YRPG</a>
+                            </h3>
+                        </div>
+                        <div class="project-images">
+                            <img src="images/pr2.png" class="pr-image single-image" alt="YRPG ゲーム画面">
+                        </div>
+                        <p class="project-description">
+                            GoogleColabratoryにて作成した簡単なRPG。魔王を倒すために職業を選択し、様々なモンスターと闘いながら成長していく本格的なロールプレイングゲーム。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">HIT&BLOW</h3>
+                        </div>
+                        <div class="project-images">
+                            <img src="images/pr1.png" class="pr-image single-image" alt="HIT&BLOW ゲーム">
+                        </div>
+                        <p class="project-description">
+                            高専祭にてチームで作成したゲーム。ヒントをもとに紙コップの位置と向きを当てるもの。いかに少ないヒントで正解にたどり着くかを競う戦略的なパズルゲーム。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Flower Picking Game</h3>
+                            <div class="project-date">2024年12月～1月</div>
+                        </div>
+                        <div class="project-images">
+                            <img src="images/g1.png" class="g-image" alt="Flower Picking Game 画面1">
+                            <img src="images/g2.png" class="g-image" alt="Flower Picking Game 画面2">
+                            <img src="images/g3.png" class="g-image" alt="Flower Picking Game 画面3">
+                            <img src="images/g4.png" class="g-image" alt="Flower Picking Game 画面4">
+                        </div>
+                        <p class="project-description">
+                            このゲーム「花摘みゲーム」は、プレイヤーがキャラクターを操作して、出現する花を摘むことを目的としたアクションゲーム。ゲームはpygameライブラリを使用して制作されている。
+                            <br><br>
+                            プレイヤーは、ゲーム画面上で自キャラを操り、ランダムに出現する花を取ることで得点を稼ぐことができる。花は一定の間隔で生成され、10秒の時間が過ぎると枯れてしまう。
+                            自キャラはWASDキーで移動し、ゲーム内でFキーやGキーを押すことで移動速度を調整することもできる。プレイヤーが花に触れると、スコアが10ポイント加算されるが、花が枯れてしまうとゲームオーバーになるため、戦略的に行動することが求められる。
+                        </p>
+                        <a class="project-link" href="https://github.com/Taiga-Y9/Flower-picking-game" target="_blank">
+                            Githubリポジトリを見る →
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Calculator</h3>
+                            <div class="project-date">2024年2月 | 制作時間：約10時間</div>
+                        </div>
+                        <div class="project-images">
+                            <img src="images/c1.png" class="g-image" alt="Calculator アプリ画面1">
+                            <img src="images/c2.png" class="g-image" alt="Calculator アプリ画面2">
+                            <img src="images/c3.png" class="g-image" alt="Calculator アプリ画面3">
+                        </div>
+                        <p class="project-description">
+                            このプログラムは、PySide6を使用したシンプルな計算機アプリケーション。ユーザーはボタンをクリックして数字と演算子を入力し、基本的な四則演算（加算、減算、乗算、除算）が可能。
+                            <br><br>
+                            項が3つ以上の計算、小数点以下を含んだ計算はできない。入力する桁数に縛りはない。ゼロでの除算の場合はエラーを表示する。可読性と保守性を考慮し、アプリはcalculator_app.pyに機能が、main.pyにエントリポイントが分割されている。
+                        </p>
+                        <a class="project-link" href="https://github.com/Taiga-Y9/calculator" target="_blank">
+                            Githubリポジトリを見る →
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
-<a target="_blank" href="https://icons8.com/icon/13441/python">Python</a>,<a target="_blank" href="https://icons8.com/icon/1043/html">HTML</a>,<a target="_blank" href="https://icons8.com/icon/1045/css">CSS</a> アイコン by <a target="_blank" href="https://icons8.com">Icons8</a>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>
+            <a href="https://icons8.com/icon/13441/python" target="_blank">Python</a>,
+            <a href="https://icons8.com/icon/1043/html" target="_blank">HTML</a>,
+            <a href="https://icons8.com/icon/1045/css" target="_blank">CSS</a>,
+            <a href="https://icons8.com/icon/shQTXiDQiQVR/c-programming" target="_blank">C</a>,
+            <a href="https://icons8.com.br/icon/40669/c" target="_blank">C++</a>
+            アイコン by <a href="https://icons8.com" target="_blank">Icons8</a>
+        </p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuIcon = document.getElementById('menu-icon');
+            const navMobile = document.getElementById('nav-mobile');
+
+            menuIcon.addEventListener('click', function() {
+                navMobile.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking on a link
+            const mobileLinks = navMobile.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navMobile.classList.remove('active');
+                });
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!menuIcon.contains(event.target) && !navMobile.contains(event.target)) {
+                    navMobile.classList.remove('active');
+                }
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Add scroll effect to header
+            let lastScrollTop = 0;
+            const header = document.querySelector('header');
+            
+            window.addEventListener('scroll', function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+
+            // Intersection Observer for fade-in animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Apply fade-in animation to sections
+            document.querySelectorAll('.fade-in').forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+        });
+    </script>
 </body>
 </html>
