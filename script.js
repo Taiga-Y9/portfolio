@@ -1,15 +1,28 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const menuIcon = document.getElementById('menu-icon');
-    const navMenu = document.getElementById('nav-menu');
+// 表示中のセクションに合わせて、ナビの現在地を更新する
+document.addEventListener("DOMContentLoaded", () => {
+  const links = document.querySelectorAll('.nav a[href^="#"]');
+  const targets = [...links]
+    .map((a) => document.querySelector(a.getAttribute("href")))
+    .filter(Boolean);
 
-    menuIcon.addEventListener('click', function() {
-        navMenu.classList.toggle('active');  // メニューの表示/非表示を切り替える
-        
-        // 位置を動的に設定
-        if (navMenu.classList.contains('active')) {
-            navMenu.style.top = '70px';  // 表示する際の位置を設定
-        } else {
-            navMenu.style.top = '60px';  // 非表示の際の位置を設定（必要に応じて）
-        }
+  const setCurrent = (id) => {
+    links.forEach((a) => {
+      if (a.getAttribute("href") === "#" + id) {
+        a.setAttribute("aria-current", "true");
+      } else {
+        a.removeAttribute("aria-current");
+      }
     });
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) setCurrent(e.target.id);
+      });
+    },
+    { rootMargin: "-30% 0px -60% 0px" }
+  );
+
+  targets.forEach((t) => observer.observe(t));
 });
